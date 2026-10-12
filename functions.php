@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Job Portal functions and definitions
  *
@@ -7,9 +8,9 @@
  * @package Job_Portal
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
+if (! defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+	define('_S_VERSION', '1.0.0');
 }
 
 /**
@@ -19,17 +20,18 @@ if ( ! defined( '_S_VERSION' ) ) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function job_portal_setup() {
+function job_portal_setup()
+{
 	/*
 		* Make theme available for translation.
 		* Translations can be filed in the /languages/ directory.
 		* If you're building a theme based on Job Portal, use a find and replace
 		* to change 'job-portal' to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( 'job-portal', get_template_directory() . '/languages' );
+	load_theme_textdomain('job-portal', get_template_directory() . '/languages');
 
 	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
 
 	/*
 		* Let WordPress manage the document title.
@@ -37,19 +39,19 @@ function job_portal_setup() {
 		* hard-coded <title> tag in the document head, and expect WordPress to
 		* provide it for us.
 		*/
-	add_theme_support( 'title-tag' );
+	add_theme_support('title-tag');
 
 	/*
 		* Enable support for Post Thumbnails on posts and pages.
 		*
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
-	add_theme_support( 'post-thumbnails' );
+	add_theme_support('post-thumbnails');
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'job-portal' ),
+			'menu-1' => esc_html__('Primary', 'job-portal'),
 		)
 	);
 
@@ -83,7 +85,7 @@ function job_portal_setup() {
 	);
 
 	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+	add_theme_support('customize-selective-refresh-widgets');
 
 	/**
 	 * Add support for core custom logo.
@@ -100,7 +102,7 @@ function job_portal_setup() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'job_portal_setup' );
+add_action('after_setup_theme', 'job_portal_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -109,22 +111,24 @@ add_action( 'after_setup_theme', 'job_portal_setup' );
  *
  * @global int $content_width
  */
-function job_portal_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'job_portal_content_width', 640 );
+function job_portal_content_width()
+{
+	$GLOBALS['content_width'] = apply_filters('job_portal_content_width', 640);
 }
-add_action( 'after_setup_theme', 'job_portal_content_width', 0 );
+add_action('after_setup_theme', 'job_portal_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function job_portal_widgets_init() {
+function job_portal_widgets_init()
+{
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'job-portal' ),
+			'name'          => esc_html__('Sidebar', 'job-portal'),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'job-portal' ),
+			'description'   => esc_html__('Add widgets here.', 'job-portal'),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -132,41 +136,42 @@ function job_portal_widgets_init() {
 		)
 	);
 }
-add_action( 'widgets_init', 'job_portal_widgets_init' );
+add_action('widgets_init', 'job_portal_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function job_portal_scripts() {
-	wp_enqueue_style( 'job-portal-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'job-portal-style', 'rtl', 'replace' );
+function job_portal_scripts()
+{
+	wp_enqueue_style('job-portal-style', get_stylesheet_uri(), array(), _S_VERSION);
+	wp_style_add_data('job-portal-style', 'rtl', 'replace');
 	$theme_uri = get_template_directory_uri();
 
-	wp_enqueue_style( 'job-portal-bootstrap', $theme_uri . '/assets/css/bootstrap.min.css', array(), _S_VERSION );
-	wp_enqueue_style( 'job-portal-line-icons', $theme_uri . '/assets/css/line-icons.css', array(), _S_VERSION );
-	wp_enqueue_style( 'job-portal-owl-carousel', $theme_uri . '/assets/css/owl.carousel.min.css', array(), _S_VERSION );
-	wp_enqueue_style( 'job-portal-owl-theme', $theme_uri . '/assets/css/owl.theme.default.css', array( 'job-portal-owl-carousel' ), _S_VERSION );
-	wp_enqueue_style( 'job-portal-slicknav', $theme_uri . '/assets/css/slicknav.min.css', array(), _S_VERSION );
-	wp_enqueue_style( 'job-portal-animate', $theme_uri . '/assets/css/animate.css', array(), _S_VERSION );
-	wp_enqueue_style( 'job-portal-main', $theme_uri . '/assets/css/main.css', array( 'job-portal-bootstrap' ), _S_VERSION );
-	wp_enqueue_style( 'job-portal-responsive', $theme_uri . '/assets/css/responsive.css', array( 'job-portal-main' ), _S_VERSION );
+	wp_enqueue_style('job-portal-bootstrap', $theme_uri . '/assets/css/bootstrap.min.css', array(), _S_VERSION);
+	wp_enqueue_style('job-portal-line-icons', $theme_uri . '/assets/css/line-icons.css', array(), _S_VERSION);
+	wp_enqueue_style('job-portal-owl-carousel', $theme_uri . '/assets/css/owl.carousel.min.css', array(), _S_VERSION);
+	wp_enqueue_style('job-portal-owl-theme', $theme_uri . '/assets/css/owl.theme.default.css', array('job-portal-owl-carousel'), _S_VERSION);
+	wp_enqueue_style('job-portal-slicknav', $theme_uri . '/assets/css/slicknav.min.css', array(), _S_VERSION);
+	wp_enqueue_style('job-portal-animate', $theme_uri . '/assets/css/animate.css', array(), _S_VERSION);
+	wp_enqueue_style('job-portal-main', $theme_uri . '/assets/css/main.css', array('job-portal-bootstrap'), _S_VERSION);
+	wp_enqueue_style('job-portal-responsive', $theme_uri . '/assets/css/responsive.css', array('job-portal-main'), _S_VERSION);
 
-	wp_enqueue_script( 'job-portal-popper', $theme_uri . '/assets/js/popper.min.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-bootstrap', $theme_uri . '/assets/js/bootstrap.min.js', array( 'jquery', 'job-portal-popper' ), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-owl-carousel', $theme_uri . '/assets/js/owl.carousel.min.js', array( 'jquery' ), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-slicknav', $theme_uri . '/assets/js/jquery.slicknav.js', array( 'jquery' ), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-counterup', $theme_uri . '/assets/js/jquery.counterup.min.js', array( 'jquery' ), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-waypoints', $theme_uri . '/assets/js/waypoints.min.js', array( 'jquery' ), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-wow', $theme_uri . '/assets/js/wow.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'job-portal-main', $theme_uri . '/assets/js/main.js', array( 'jquery', 'job-portal-bootstrap' ), _S_VERSION, true );
+	wp_enqueue_script('job-portal-popper', $theme_uri . '/assets/js/popper.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('job-portal-bootstrap', $theme_uri . '/assets/js/bootstrap.min.js', array('jquery', 'job-portal-popper'), _S_VERSION, true);
+	wp_enqueue_script('job-portal-owl-carousel', $theme_uri . '/assets/js/owl.carousel.min.js', array('jquery'), _S_VERSION, true);
+	wp_enqueue_script('job-portal-slicknav', $theme_uri . '/assets/js/jquery.slicknav.js', array('jquery'), _S_VERSION, true);
+	wp_enqueue_script('job-portal-counterup', $theme_uri . '/assets/js/jquery.counterup.min.js', array('jquery'), _S_VERSION, true);
+	wp_enqueue_script('job-portal-waypoints', $theme_uri . '/assets/js/waypoints.min.js', array('jquery'), _S_VERSION, true);
+	wp_enqueue_script('job-portal-wow', $theme_uri . '/assets/js/wow.js', array(), _S_VERSION, true);
+	wp_enqueue_script('job-portal-main', $theme_uri . '/assets/js/main.js', array('jquery', 'job-portal-bootstrap'), _S_VERSION, true);
 
-	wp_enqueue_script( 'job-portal-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_enqueue_script('job-portal-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
 	}
 }
-add_action( 'wp_enqueue_scripts', 'job_portal_scripts' );
+add_action('wp_enqueue_scripts', 'job_portal_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -191,7 +196,32 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+add_action('acf/init', function () {
+	if (function_exists('acf_add_options_page')) {
+
+		acf_add_options_page(array(
+			'page_title'    => 'Theme General Settings',
+			'menu_title'    => 'Theme Settings',
+			'menu_slug'     => 'theme-general-settings',
+			'capability'    => 'edit_posts',
+			'redirect'      => false
+		));
+	}
+});
+
+//thêm class vào item link menu
+function add_specific_menu_location_atts($atts, $item, $args)
+{
+	// check if the item is in the primary menu
+	if ($args->theme_location == 'menu-1') {
+		// add the desired attributes:
+		$atts['class'] = 'nav-link';
+	}
+	return $atts;
+}
+add_filter('nav_menu_link_attributes', 'add_specific_menu_location_atts', 10, 3);
