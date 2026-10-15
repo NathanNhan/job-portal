@@ -30,7 +30,13 @@ $logo = get_field('logo', 'option');
 <body <?php body_class(); ?>>
   <?php wp_body_open(); ?>
   <!-- Header Section Start -->
-  <header id="home" class="hero-area">
+  <?php
+  $hero_background__img = get_field("hero_background");
+  $hero_title = get_field("hero_title");
+  $hero_des = get_field("hero_description");
+
+  ?>
+  <header id="home" class="hero-area" style="background: url(<?php echo esc_url($hero_background__img['url']); ?>)center center no-repeat;">
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg fixed-top scrolling-navbar">
       <div class="container">
@@ -139,8 +145,8 @@ $logo = get_field('logo', 'option');
       <div class="row space-100 justify-content-center">
         <div class="col-lg-10 col-md-12 col-xs-12">
           <div class="contents">
-            <h2 class="head-title">Find the job that fits your life</h2>
-            <p>Aliquam vestibulum cursus felis. In iaculis iaculis sapien ac condimentum. Vestibulum congue posuere lacus, <br> id tincidunt nisi porta sit amet. Suspendisse et sapien varius, pellentesque dui non.</p>
+            <h2 class="head-title"><?= esc_html($hero_title); ?></h2>
+            <p><?= esc_html($hero_des); ?></p>
             <div class="job-search-form">
               <form>
                 <div class="row">
