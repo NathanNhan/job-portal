@@ -3,6 +3,9 @@
 <?php
 $categories_title = get_field('categories_title');
 $categories_sub__title = get_field('categories_subtitle');
+$browse_jobs_title = get_field('browse_jobs_title');
+$browse_jobs_description = get_field('browse_jobs_description');
+$browse_jobs_img = get_field('browse_jobs_image');
 
 ?>
 <!-- Category Section Start -->
@@ -48,15 +51,14 @@ $categories_sub__title = get_field('categories_subtitle');
       <div class="col-lg-6 col-md-12 col-sm-12">
         <div class="text-wrapper">
           <div>
-            <h3>7,000+ Browse Jobs</h3>
-            <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 600,000 companies worldwide. The right job is out there.</p>
-            <a class="btn btn-common" href="#">Search jobs</a>
+            <h3><?= !empty($browse_jobs_title) ? $browse_jobs_title : ''; ?></h3>
+            <p><?= !empty($browse_jobs_description) ? $browse_jobs_description : ''; ?></p>
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-12 col-sm-12">
         <div class="img-thumb">
-          <img class="img-fluid" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/search.png'); ?>" alt="">
+          <img class="img-fluid" src="<?= is_array($browse_jobs_img) ? $browse_jobs_img["url"] : get_template_directory() . "/assets/img/search.png"; ?>" alt="">
         </div>
       </div>
     </div>
