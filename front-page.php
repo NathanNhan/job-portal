@@ -6,6 +6,9 @@ $categories_sub__title = get_field('categories_subtitle');
 $browse_jobs_title = get_field('browse_jobs_title');
 $browse_jobs_description = get_field('browse_jobs_description');
 $browse_jobs_img = get_field('browse_jobs_image');
+$how_it_works__title = get_field('how_it_works_title');
+$how_it_works_des = get_field('how_it_works_description');
+$how_it_works_box = get_field('how_it_works_items');
 
 ?>
 <!-- Category Section Start -->
@@ -70,37 +73,22 @@ $browse_jobs_img = get_field('browse_jobs_image');
 <section class="how-it-works section">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">How It Works?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ellentesque dignissim quam et <br> metus effici turac fringilla lorem facilisis.</p>
+      <h2 class="section-title"><?= $how_it_works__title; ?></h2>
+      <p><?= $how_it_works_des; ?></p>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="work-process">
-          <span class="process-icon">
-            <i class="lni-user"></i>
-          </span>
-          <h4>Create an Account</h4>
-          <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="work-process step-2">
-          <span class="process-icon">
-            <i class="lni-search"></i>
-          </span>
-          <h4>Search Jobs</h4>
-          <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="work-process step-3">
-          <span class="process-icon">
-            <i class="lni-cup"></i>
-          </span>
-          <h4>Apply</h4>
-          <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
-        </div>
-      </div>
+      <?php if (!is_null($how_it_works_box) && is_array($how_it_works_box)) :  ?>
+        <?php foreach ($how_it_works_box as $box) : ?>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="work-process">
+              <?= $box["icon"]; ?>
+              <h4><?= $box["position"]; ?></h4>
+              <p><?= $box["description"]; ?></p>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+
     </div>
   </div>
 </section>
