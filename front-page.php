@@ -9,6 +9,8 @@ $browse_jobs_img = get_field('browse_jobs_image');
 $how_it_works__title = get_field('how_it_works_title');
 $how_it_works_des = get_field('how_it_works_description');
 $how_it_works_box = get_field('how_it_works_items');
+$latest_job_title = get_field('latest_job_title');
+$latest_job_description = get_field('latest_job_description');
 
 ?>
 <!-- Category Section Start -->
@@ -98,114 +100,60 @@ $how_it_works_box = get_field('how_it_works_items');
 <section id="latest-jobs" class="section bg-gray">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">Latest Jobs</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ellentesque dignissim quam et <br> metus effici turac fringilla lorem facilisis.</p>
+      <h2 class="section-title"><?php echo esc_html($latest_job_title); ?></h2>
+      <p><?php echo esc_html($latest_job_description); ?></p>
     </div>
     <div class="row">
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-1.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">UX Designer</a></h3>
-            <p class="brand">MagNews</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
+      <?php
+      $latest_jobs = new WP_Query(
+        array(
+          'post_type'      => 'job',
+          'post_status'    => 'publish',
+          'posts_per_page' => 6,
+          'orderby'        => 'date',
+          'order'          => 'DESC',
+        )
+      );
+
+      if ($latest_jobs->have_posts()) :
+        while ($latest_jobs->have_posts()) :
+          $latest_jobs->the_post();
+          $job_categories = get_the_terms(get_the_ID(), 'job_category');
+      ?>
+          <div class="col-lg-6 col-md-12 col-xs-12">
+            <div class="jobs-latest">
+              <div class="img-thumb">
+                <?php if (has_post_thumbnail()) : ?>
+                  <?php the_post_thumbnail('medium', array('alt' => get_the_title())); ?>
+                <?php else : ?>
+                  <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-1.jpg'); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                <?php endif; ?>
+              </div>
+              <div class="content">
+                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                <?php if (!empty($job_categories) && !is_wp_error($job_categories)) : ?>
+                  <p class="brand"><?php echo esc_html($job_categories[0]->name); ?></p>
+                <?php endif; ?>
+                <div class="tags">
+                  <span><i class="lni-user"></i> <?php the_author(); ?></span>
+                </div>
+                <div class="tag mb-3">
+                  <i class="lni-tag"></i>
+                  <?php
+                  $skills_job = get_post_meta(get_the_ID(), 'skills', true);
+                  echo $skills_job;
+                  ?>
+                </div>
+              </div>
             </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="full-time">Full Time</span>
           </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-2.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">UI Designer</a></h3>
-            <p class="brand">Hunter Inc.</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
-            </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="part-time">Part Time</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-3.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">Web Developer</a></h3>
-            <p class="brand">MagNews</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
-            </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="full-time">Full Time</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-4.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">UX Designer</a></h3>
-            <p class="brand">AmazeSoft</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
-            </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="full-time">Full Time</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-2.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">Digital Marketer</a></h3>
-            <p class="brand">Bingo</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
-            </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="part-time">Part Time</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 col-xs-12">
-        <div class="jobs-latest">
-          <div class="img-thumb">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/features/img-1.jpg'); ?>" alt="">
-          </div>
-          <div class="content">
-            <h3><a href="job-details.html">Web Developer</a></h3>
-            <p class="brand">MagNews</p>
-            <div class="tags">
-              <span><i class="lni-map-marker"></i> New York</span>
-              <span><i class="lni-user"></i> John Smith</span>
-            </div>
-            <div class="tag mb-3"><i class="lni-tag"></i> #Html #Css #PHP</div>
-            <span class="full-time">Full Time</span>
-          </div>
-        </div>
-      </div>
+      <?php
+        endwhile;
+        wp_reset_postdata();
+      endif;
+      ?>
       <div class="col-12 text-center mt-4">
-        <a href="job-page.html" class="btn btn-common">Browse All Jobs</a>
+        <a href="<?php echo esc_url(get_post_type_archive_link('job')); ?>" class="btn btn-common">Browse All Jobs</a>
       </div>
     </div>
   </div>
