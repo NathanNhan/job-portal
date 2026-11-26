@@ -36,9 +36,10 @@ $logo = get_field('logo', 'option');
   $hero_des = get_field("hero_description");
 
   ?>
-  <header id="home" class="hero-area" style="background: url(<?php echo esc_url($hero_background__img['url']); ?>)center center no-repeat;">
+  <header id="home" class="hero-area" style="<?php echo !empty($hero_background__img['url']) ? 'background: url(' . esc_url($hero_background__img['url']) . ') center center no-repeat;' : 'background: url(' . get_template_directory_uri() . '/assets/img/bg/bg-intro.jpg' . ') center center no-repeat;'; ?>">
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg fixed-top scrolling-navbar">
+
       <div class="container">
         <div class="theme-header clearfix">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -147,60 +148,56 @@ $logo = get_field('logo', 'option');
           <div class="contents">
             <h2 class="head-title"><?= esc_html($hero_title); ?></h2>
             <p><?= esc_html($hero_des); ?></p>
-            <div class="job-search-form">
-              <form>
-                <div class="row">
-                  <div class="col-lg-5 col-md-6 col-xs-12">
-                    <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Job Title or Company Name">
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-xs-12">
-                    <div class="form-group">
-                      <div class="search-category-container">
-                        <label class="styled-select">
-                          <select>
-                            <option value="none">Locations</option>
-                            <option value="none">New York</option>
-                            <option value="none">California</option>
-                            <option value="none">Washington</option>
-                            <option value="none">Birmingham</option>
-                            <option value="none">Chicago</option>
-                            <option value="none">Phoenix</option>
-                          </select>
-                        </label>
+            <?php if (!is_post_type_archive('job') && !is_singular('job')) : ?>
+              <div class="job-search-form">
+                <form action="<?php echo esc_url(get_post_type_archive_link('job')); ?>" method="get">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <input class="form-control" type="search" name="job_keyword" placeholder="<?php esc_attr_e('Job title or keyword', 'job-portal'); ?>">
                       </div>
-                      <i class="lni-map-marker"></i>
                     </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-xs-12">
-                    <div class="form-group">
-                      <div class="search-category-container">
-                        <label class="styled-select">
-                          <select>
-                            <option>All Categories</option>
-                            <option>Finance</option>
-                            <option>IT & Engineering</option>
-                            <option>Education/Training</option>
-                            <option>Art/Design</option>
-                            <option>Sale/Markting</option>
-                            <option>Healthcare</option>
-                            <option>Science</option>
-                            <option>Food Services</option>
-                          </select>
-                        </label>
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <input class="form-control" type="text" name="job_location" placeholder="<?php esc_attr_e('City or region', 'job-portal'); ?>">
+                        <i class="lni-map-marker"></i>
                       </div>
-                      <i class="lni-layers"></i>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <div class="search-category-container">
+                          <label class="styled-select">
+                            <select name="job_category">
+                              <option value=""><?php esc_html_e('All categories', 'job-portal'); ?></option>
+                              <?php
+                              $job_search_categories = get_terms(array(
+                                'taxonomy'   => 'job_category',
+                                'hide_empty' => false,
+                              ));
+                              if (!is_wp_error($job_search_categories)) :
+                                foreach ($job_search_categories as $category) :
+                              ?>
+                                  <option value="<?php echo esc_attr($category->slug); ?>"><?php echo esc_html($category->name); ?></option>
+                              <?php
+                                endforeach;
+                              endif;
+                              ?>
+                            </select>
+                          </label>
+                        </div>
+                        <i class="lni-layers"></i>
+                      </div>
+                    </div>
+                    <div class="col-lg-1 col-md-6 col-xs-12">
+                      <button type="submit" class="button"><i class="lni-search"></i></button>
                     </div>
                   </div>
-                  <div class="col-lg-1 col-md-6 col-xs-12">
-                    <button type="submit" class="button"><i class="lni-search"></i></button>
-                  </div>
-                </div>
-              </form>
-            </div>
+                </form>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
     </div>
+
   </header>
